@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ss</title>
+</head>
+<body>
+
+<style type="text/css">
+	
+</style>
+
+<h2 id="title" style="margin-left: 670px">hello</h2>
+<form name="form1">
+<input type="text" name="title" id="title" style="margin-left: 605px;font-size: 20px"></input>
+
+<input type="text" name="t1" id="t1" oninput="check()" style="height: 30px;width: 200px;font-size: 15px;margin-left: 600px"></input>	
+<p></p>
+</form>
+<button onclick="sta()" style="height: 30px;width: 200px;font-size: 15px;margin-left: 600px">start</button>
+<button onclick="sto()" style="height: 30px;width: 200px;font-size: 15px;margin-left: 600px">stop</button>
+
+<script type="text/javascript">
+	var n = "",t=0,letters=0
+	var sett 
+
+	function main() {
+			var a = make();
+			console.log(a,"1",n);
+		}	
+	
+	function time() {
+		t++;
+		console.log(t);
+	}
+	function sta() {
+		sett = setInterval(time,1000)
+	}
+	function sto() {
+		clearInterval(sett)
+	}
+
+
+	function make() {
+		var al="abcdefghijklmnopqrstuvwxyz",l=0;
+		n = ""
+		l = Math.floor(Math.random() * (10 - 6 + 1)) + 6;
+		for (var i = 0; i < l; i++) {
+			n += al[Math.floor(Math.random() * (26))];
+		}
+		// Math.floor(Math.random() * (max - min + 1)) + min  在[min,max]里取随机
+		
+		document.getElementById("title").value = n;
+		return l
+	}
+
+	function check(){
+		document.getElementById("title").value = n;
+		var c = form1.t1.value;
+		// console.log(c);
+		if(c==n){
+
+			document.getElementById("t1").value = "";
+			main();
+		}
+	}
+
+	main()
+
+</script>
+
+
+
+<!-- <button name="btn1" onclick="make()">fi</button> -->
+
+
+
+
+
+</body>
+</html>
