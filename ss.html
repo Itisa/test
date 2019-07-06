@@ -6,22 +6,58 @@
 <body>
 
 <style type="text/css">
-	
+	#yi{
+		height: 30px;
+		width: 200px;
+		font-size: 15px;
+		margin-left: 600px;
+	}
+	#title{
+		margin-left: 605px;
+		font-size: 25px;
+		border: 0px;
+	}
+	#t1{
+		height: 30px;
+		width: 200px;
+		font-size: 20px;
+		margin-left: 600px;
+	}
+	#time{
+		font-size: 20px;
+		margin-left: 600px;
+		border: 0px;
+	}#nums{
+		font-size: 20px;
+		margin-left: 600px;
+		border: 0px;
+	}#nt{
+		font-size: 20px;
+		margin-left: 600px;
+		border: 0px;
+	}
 </style>
 
-<h2 id="title" style="margin-left: 670px">hello</h2>
-<form name="form1">
-<input type="text" name="title" id="title" style="margin-left: 605px;font-size: 20px"></input>
+<h2 id="titl" style="margin-left: 670px">hello</h2>
 
-<input type="text" name="t1" id="t1" oninput="check()" style="height: 30px;width: 200px;font-size: 15px;margin-left: 600px"></input>	
+<form name="form1">
+<input type="text"id="title"></input>
+<input type="text" name="t1" id="t1" oninput="check()"></input>	
 <p></p>
+
 </form>
-<button onclick="sta()" style="height: 30px;width: 200px;font-size: 15px;margin-left: 600px">start</button>
-<button onclick="sto()" style="height: 30px;width: 200px;font-size: 15px;margin-left: 600px">stop</button>
+<button onclick="sta()"	id="yi">start</button>
+<button onclick="sto()" id="yi">stop</button>
+<p></p>
+<input type="number" id="time" value="0">time</input>
+<p></p>
+<input type="number" id="nums" value="0">nums</input>
+<p></p>
+<input type="number" id="nt" value="0">nums/time</input>
 
 <script type="text/javascript">
-	var n = "",t=0,letters=0
-	var sett 
+	var n = "",t=0,letters=0,l=0,nt=0;
+	var sett;
 
 	function main() {
 			var a = make();
@@ -30,18 +66,18 @@
 	
 	function time() {
 		t++;
-		console.log(t);
+		document.getElementById("time").value = t
+		// console.log(t);
 	}
 	function sta() {
-		sett = setInterval(time,1000)
+		sett = setInterval(time,1000);
 	}
 	function sto() {
-		clearInterval(sett)
+		clearInterval(sett);
 	}
 
-
 	function make() {
-		var al="abcdefghijklmnopqrstuvwxyz",l=0;
+		var al="abcdefghijklmnopqrstuvwxyz";
 		n = ""
 		l = Math.floor(Math.random() * (10 - 6 + 1)) + 6;
 		for (var i = 0; i < l; i++) {
@@ -50,21 +86,27 @@
 		// Math.floor(Math.random() * (max - min + 1)) + min  在[min,max]里取随机
 		
 		document.getElementById("title").value = n;
+		// console.log(n);
 		return l
 	}
 
 	function check(){
-		document.getElementById("title").value = n;
+		// document.getElementById("title").value = n;
 		var c = form1.t1.value;
 		// console.log(c);
 		if(c==n){
-
+			letters = letters + l
+			nt = letters/t*100
+			nt = Math.round(nt)/100
+			document.getElementById("nums").value = letters;
+			document.getElementById("nt").value = nt;
 			document.getElementById("t1").value = "";
+			// console.log(n,letters,nt,"nnnn")
 			main();
 		}
 	}
 
-	main()
+	main();
 
 </script>
 
