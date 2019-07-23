@@ -11,6 +11,7 @@
 		width: 200px;
 		font-size: 15px;
 		margin-left: 600px;
+		/*border: 0px;*/
 	}
 	#title{
 		margin-left: 605px;
@@ -41,7 +42,7 @@
 <h2 id="titl" style="margin-left: 670px">hello</h2>
 
 <form name="form1">
-<input type="text"id="title"></input>
+<input type="text"id="title" disabled="true"></input>
 <input type="text" name="t1" id="t1" oninput="check()"></input>	
 <p></p>
 
@@ -49,25 +50,24 @@
 <button onclick="sta()"	id="yi">start</button>
 <button onclick="sto()" id="yi">stop</button>
 <p></p>
-<input type="number" id="time" value="0">time</input>
+<input type="number" id="time" value="0" disabled="true">time</input>
 <p></p>
-<input type="number" id="nums" value="0">nums</input>
+<input type="number" id="nums" value="0" disabled="true">nums</input>
 <p></p>
-<input type="number" id="nt" value="0">nums/time</input>
+<input type="number" id="nt" value="0" disabled="true">nums/time</input>
 
 <script type="text/javascript">
 	var n = "",t=0,letters=0,l=0,nt=0;
 	var sett;
 
-	function main() {
-			var a = make();
-			console.log(a,"1",n);
+	function main(ti) {
+			var a = make(ti);
+			// console.log(a,"1",n);
 		}	
 	
 	function time() {
 		t++;
 		document.getElementById("time").value = t
-		// console.log(t);
 	}
 	function sta() {
 		sett = setInterval(time,1000);
@@ -76,47 +76,50 @@
 		clearInterval(sett);
 	}
 
-	function make() {
+	function make(ti) {
 		var al="abcdefghijklmnopqrstuvwxyz";
-		n = ""
-		l = Math.floor(Math.random() * (10 - 6 + 1)) + 6;
+		// n = ""
+		// l = Math.floor(Math.random() * (6 - 4 + 1)) + 4;
+		l = ti
 		for (var i = 0; i < l; i++) {
 			n += al[Math.floor(Math.random() * (26))];
 		}
 		// Math.floor(Math.random() * (max - min + 1)) + min  在[min,max]里取随机
-		
 		document.getElementById("title").value = n;
-		// console.log(n);
 		return l
 	}
 
 	function check(){
-		// document.getElementById("title").value = n;
 		var c = form1.t1.value;
-		// console.log(c);
-		if(c==n){
-			letters = letters + l
-			nt = letters/t*100
-			nt = Math.round(nt)/100
+		if (c==n[0]) {
+			console.log(n,n.length,c,2)
+			c = n
+			n = ""
+			for (var i = 1; i < c.length; i++) {
+				n += c[i]
+				console.log(n,i,3)
+			}
+			console.log(n,c,1)
+			letters = letters + 1
+			if (t!=0) {
+				nt = letters/t*100;
+				nt = Math.round(nt)/100;
+				document.getElementById("nt").value = nt;
+			}
+			
 			document.getElementById("nums").value = letters;
-			document.getElementById("nt").value = nt;
 			document.getElementById("t1").value = "";
-			// console.log(n,letters,nt,"nnnn")
-			main();
+			main(1);
+		} else {
+			document.getElementById("t1").value = "";
 		}
 	}
 
-	main();
+	main(10);
 
 </script>
 
-
-
 <!-- <button name="btn1" onclick="make()">fi</button> -->
-
-
-
-
 
 </body>
 </html>
