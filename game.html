@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>game</title>
+</head>
+<body>
+<style type="text/css">
+	#line{
+		position: absolute;
+		left: 0px;
+		top: 300px;
+		height: 10px;
+		background: black;
+		width: 1437px;
+		border: 0px;
+	}
+	#player{
+		position: absolute;
+		left: 100px;
+		height: 30px;
+		width: 30px;
+		top: 270px;
+		border: 0px;
+		background: red;
+	}
+	#score{
+		border: 0px;
+		font-size: 20px;
+	}
+</style>
+<script type="text/javascript">
+	var sett,t=0,x=0,y=0,y1=0,yt=0,y2=0,x1=0
+	
+	function time() {
+		if (y1!=0) {
+			y += y1*2
+			y1 -= 1		
+		}else{
+			if (y+y2>0) {
+				y2-=1
+				y += y2
+			}else{
+				y = 0
+			}
+		}
+		if (x1>0) {
+			x += x1
+			x1 -= 0.5
+		}else{
+			if (x1<0) {
+				x1 += 0.5
+			}
+		}
+
+		yt = 270 - y
+		xt = 100 + x
+		document.getElementById("player").style.top = yt+"px"
+		document.getElementById("player").style.left = xt+"px"
+		t += 1
+		if (t%2==0) {
+			document.getElementById("score").value = t/20	
+		}
+		
+	}
+	function init() {
+		sett = setInterval(time,50);
+	}
+
+
+	function key(ev) {
+		console.log(ev,ev.keyCode)
+		if (ev.keyCode == 38) {
+			console.log("in")
+			up()
+		}else{
+			if (ev.keyCode == 39) {
+				right()
+			}else{
+				if (ev.keyCode == 37) {
+					left()
+				}
+			}
+		}
+	}
+	function up() {
+		if (y1==0) {
+			y2 =0
+			y1 = 10
+		}
+	}
+	function right() {
+		x1 += 2
+	}
+	function left() {
+		x1 -= 2
+	}
+	init()
+</script>
+<h2>time:
+<input id="score" value="0" disabled="true"></input>
+<button id="player" onkeydown="key(event)"></button>
+<input id="line" disabled="true"></input>
+</body>
+</html>
