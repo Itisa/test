@@ -36,10 +36,14 @@
 		font-size: 20px;
 		margin-left: 600px;
 		border: 0px;
+	}#maxnt{
+		font-size: 20px;
+		margin-left: 600px;
+		border: 0px;
 	}
 </style>
 
-<h2 id="titl" style="margin-left: 670px">hello</h2>
+<h1 id="titl" style="margin-left: 670px">hello</h1>
 
 <form name="form1">
 <input type="text"id="title" disabled="true"></input>
@@ -55,9 +59,11 @@
 <input type="number" id="nums" value="0" disabled="true">nums</input>
 <p></p>
 <input type="number" id="nt" value="0" disabled="true">nums/time</input>
+<p></p>
+<input type="number" id="maxnt" value="0" disabled="true">max nums/time</input>
 
 <script type="text/javascript">
-	var n = "",t=0,letters=0,l=0,nt=0;
+	var n = "",t=0,letters=0,l=0,nt=0,maxnt=0;
 	var sett;
 
 	function main(ti) {
@@ -78,8 +84,6 @@
 
 	function make(ti) {
 		var al="abcdefghijklmnopqrstuvwxyz";
-		// n = ""
-		// l = Math.floor(Math.random() * (6 - 4 + 1)) + 4;
 		l = ti
 		for (var i = 0; i < l; i++) {
 			n += al[Math.floor(Math.random() * (26))];
@@ -92,25 +96,31 @@
 	function check(){
 		var c = form1.t1.value;
 		if (c==n[0]) {
-			console.log(n,n.length,c,2)
+			document.getElementById("titl").style.color = "black"
+			// console.log(n,n.length,c,2)
 			c = n
 			n = ""
 			for (var i = 1; i < c.length; i++) {
 				n += c[i]
-				console.log(n,i,3)
+				// console.log(n,i,3)
 			}
-			console.log(n,c,1)
+			// console.log(n,c,1)
 			letters = letters + 1
 			if (t!=0) {
 				nt = letters/t*100;
 				nt = Math.round(nt)/100;
 				document.getElementById("nt").value = nt;
+				if (maxnt<nt & t>=10) {
+					maxnt = nt
+					document.getElementById("maxnt").value = maxnt
+				}
 			}
 			
 			document.getElementById("nums").value = letters;
 			document.getElementById("t1").value = "";
 			main(1);
 		} else {
+			document.getElementById("titl").style.color = "red"
 			document.getElementById("t1").value = "";
 		}
 	}
@@ -118,8 +128,5 @@
 	main(10);
 
 </script>
-
-<!-- <button name="btn1" onclick="make()">fi</button> -->
-
 </body>
 </html>
