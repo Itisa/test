@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>fany</title>
+</head>
+<body>
+<style type="text/css">
+	#btn{
+		position: absolute;
+		background: black;
+		height: 50px;
+		width: 50px;
+	}
+</style>
+<button id="btn" onmouseenter="mov()"></button>
+
+<script type="text/javascript">
+	var x=0,y=0
+	console.log(x,y)
+
+	function mov() {
+			x = Math.floor(Math.random()*1390);
+			y = Math.floor(Math.random()*500);
+			console.log(x,y);
+			document.getElementById("btn").style.left = x+"px";
+			document.getElementById("btn").style.top = y+"px";
+
+		}	
+</script>
+
+
+</body>
+</html>
