@@ -6,24 +6,57 @@
 <body>
 <style type="text/css">
 	#btn{
+		border: 0px;
 		position: absolute;
-		background: black;
+		left: 50px;
+		top: 50px;
+		background: #aaaaaa;
 		height: 50px;
 		width: 50px;
+		z-index: 10;
+	}#time{
+		border: 0px;
+		background: transparent;
+		font-size: 20px;
+	}#times{
+		border: 0px;
+		background: transparent;
+		font-size: 20px;
+	}#tt{
+		border: 0px;
+		background: transparent;
+		font-size: 20px;
 	}
 </style>
+<h2>time:
+<input id="time" disabled="true"></input>
+<h2>times:
+<input id="times" disabled="true"></input>
+<h2>time/times:
+<input id="tt" disabled="true"></input>
+
+
 <button id="btn" onmouseenter="mov()"></button>
 
 <script type="text/javascript">
-	var x=0,y=0
+	var x=0,y=0,t=0,ti=0,sett
 	console.log(x,y)
+	function time() {
+		t += 0.1
+		document.getElementById("time").value = Math.floor(t*10)/10;
+		if(ti!=0){document.getElementById("tt").value=Math.floor(ti/t*100)/100}
+	}
+	sett = setInterval(time,100);
 
 	function mov() {
-			x = Math.floor(Math.random()*1390);
-			y = Math.floor(Math.random()*500);
-			console.log(x,y);
-			document.getElementById("btn").style.left = x+"px";
-			document.getElementById("btn").style.top = y+"px";
+		ti += 1;
+		document.getElementById("times").value = ti;
+		document.getElementById("tt").value = Math.floor(ti/t*100)/100;
+		x = Math.floor(Math.random()*1390);
+		y = Math.floor(Math.random()*500);
+		console.log(x,y);
+		document.getElementById("btn").style.left = x+"px";
+		document.getElementById("btn").style.top = y+"px";
 
 		}	
 </script>
