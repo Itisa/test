@@ -21,6 +21,7 @@ def cal_24(a,b,c,d):
 		return NOTHIS
 
 	def printans(ans):
+		# print('in')
 		def getfu(fu):
 			if fu == 1:
 				return '+'
@@ -35,55 +36,139 @@ def cal_24(a,b,c,d):
 		n = ans[0]
 		f = ans[1]
 		# print(n,f)
+
 		if len(f) == 3:
-			a = []
-			a = '%s' % n[0]
-			a += getfu(f[0])
-			a += '%s' % n[1]
-			a += getfu(f[1])
-			a += '%s' % n[2]
-			a += getfu(f[2])
-			a += '%s' % n[3]
+			a = ['%s' % n[0], getfu(f[0]), '%s' % n[1], getfu(f[1]), '%s' % n[2], getfu(f[2]), '%s' % n[3]]
+			# a = '%s' % n[0]
+			# a += getfu(f[0])
+			# a += '%s' % n[1]
+			# a += getfu(f[1])
+			# a += '%s' % n[2]
+			# a += getfu(f[2])
+			# a += '%s' % n[3]
 			if f[0] == 1 or f[0] == 2:
 				if f[1] == 3 or f[1] == 4 or f[1] == 5:
-					a = '('+ a
-					a = a[:4] + ')' + a[4:]
+					a.insert(0,'(')
+					a.insert(4,')')
 
 			if f[1] == 1 or f[1] == 2:
 				if f[2] == 3 or f[2] == 4 or f[2] == 5:
-					a = '('+ a
-					a = a[:6] + ')' + a[6:]
+					a.insert(0,'(')
+					a.insert(6,')')
 			for i in a:
 				if i == ']':
-					l = a.find('(')
-					r = a.find(')')
-					a = a[r+2:]+'/'+a[l:r+1]
+					l = a.index('(')
+					r = a.index(')')
+					a.reverse()
+					# a = a[r+2:]+'/'+a[l:r+1]
 					break
 
 		else:
-			a = '('
-			a += '%s' % n[0]
-			a += getfu(f[0])
-			a += '%s' % n[1]
-			a += ')'
-			a += getfu(ans[2])
-			a += '('
-			a += '%s' % n[2]
-			a += getfu(f[1])
-			a += '%s' % n[3]
-			a += ')'
-		print(a)
+			a = ['(', '%s'%n[0], getfu(f[0]), '%s'%n[1], ')', getfu(ans[2]), '(', '%s'%n[2], getfu(f[1]), '%s'%n[3], ')']
+			# a = '('
+			# a += '%s' % n[0]
+			# a += getfu(f[0])
+			# a += '%s' % n[1]
+			# a += ')'
+			# a += getfu(ans[2])
+			# a += '('
+			# a += '%s' % n[2]
+			# a += getfu(f[1])
+			# a += '%s' % n[3]
+			# a += ')'
+		print(''.join(a))
+
+	def printans2(ans):
+		def getfu(fu):
+			if fu == '1':
+				return '+'
+			elif fu == '2':
+				return '-'
+			elif fu == '3':
+				return '*'
+			elif fu == '4':
+				return '/'
+			else:
+				return']'
+		n = []
+		f = []
+		if len(ans) == 4:
+			for i in ans:
+				n.append(i[1:])
+				f.append(i[:1])
+			f.pop(0)
+		else:
+			for i in range(4):
+				n.append(ans[i][1:])
+				f.append(ans[i][:1])
+			
+			f.pop(2)
+			f.pop(0)
+			midf = ans[4]
+		if len(f) == 3:
+			a = [n[0], getfu(f[0]), n[1], getfu(f[1]), n[2], getfu(f[2]), n[3]]
+			if f[0] == '1' or f[0] == '2':
+				if f[1] == '3' or f[1] == '4' or f[1] == '5':
+					a.insert(0,'(')
+					a.insert(4,')')
+
+			if f[1] == '1' or f[1] == '2':
+				if f[2] == '3' or f[2] == '4' or f[2] == '5':
+					a.insert(0,'(')
+					a.insert(6,')')
+			# for i in a:
+			# 	if i == ']':
+			# 		l = a.index('(')
+			# 		r = a.index(')')
+			# 		a.reverse()
+			# 		break
+
+		else:
+			a = ['(', n[0], getfu(f[0]), n[1], ')', getfu(midf), '(', n[2], getfu(f[1]), n[3], ')']
+
+		print(''.join(a))
+
+	def switch(l,index1,index2):
+		l.insert(index2+1,l[index1])
+		l.insert(index1+1,l[index2])
+		l.pop(index1)
+		l.pop(index2)
+		return l
 
 	def kill_same(ans):
 		flist = []
 		for i in ans:
 			if not i in flist:
 				flist.append(i)
+		# print(flist)
+		key = []
 		for i in flist:
-			print(i)
-			n = i[0]
-			f = i[1]
-		return flist
+			n = i[0][:]
+			f = i[1][:]
+			if len(f) == 3:
+				f.insert(0,1)
+				a = []
+				for i1 in range(4):
+					a.append(('%s'%f[i1]+'%s'%n[i1]))
+				a.sort()
+				if not a in key:
+					key.append(i)
+			elif len(f) == 2:
+				a = []
+				f.insert(2,1)
+				f.insert(0,1)
+				for i1 in range(4):
+					a.append(('%s'%f[i1]+'%s'%n[i1]))
+				a.append('%s'%i[2])
+				a.sort()
+				if not a in key:
+					key.append(i)
+		# print(key)
+		print(flist)
+		for i in key:
+			flist.pop(flist.index(i))
+		print(flist)
+		return key
 
 	ans = []
 	nums = [[a, b, c, d], [a, b, d, c], [a, c, b, d], [a, c, d, b], [a, d, b, c], [a, d, c, b], [b, a, c, d], [b, a, d, c], [b, c, a, d], [b, c, d, a], [b, d, a, c], [b, d, c, a], [c, a, b, d], [c, a, d, b], [c, b, a, d], [c, b, d, a], [c, d, a, b], [c, d, b, a], [d, a, b, c], [d, a, c, b], [d, b, a, c], [d, b, c, a], [d, c, a, b], [d, c, b, a]]
@@ -114,11 +199,13 @@ def cal_24(a,b,c,d):
 				a3 = cal(a1,a2,ix+2)
 				if a3 == SCORE:
 					ans.append([i,i1,ix+2])
+	print(ans,'ans')
 	ans = kill_same(ans)
-
+	print(ans,'ans"')
 	for i in ans:
 		printans(i)
+		# printans2(i)
 
 	
 if __name__ == '__main__':
-	cal_24(1,6,43,2)
+	cal_24(1,1,1,72)
