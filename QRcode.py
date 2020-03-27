@@ -4,7 +4,7 @@ import time
 import math
 t0 = time.time()
 
-file = 'QRcode1.jpeg'
+file = 'QR2.png'
 
 im = Image.open(file).rotate(180)
 li = []
@@ -19,7 +19,10 @@ def change_to_bw(im):
 		py = int(i/weight)
 		px = i-(weight*py)
 
-		r,g,b = data[i]
+		if im.mode == 'RGB':
+			r,g,b = data[i]
+		elif im.mode == 'RGBA':
+			r,g,b,a = data[i]
 
 		if (r+g+b) > 500:
 			im.putpixel((px,py),(255,255,255))
@@ -142,8 +145,6 @@ def decode(li):
 	for i in range(3):
 		yanma += fang(2,2-i)*lyanma[i]
 
-
-
 change_to_bw(im)
 
 
@@ -213,10 +214,26 @@ for i in range(len(data)):
 			if checkpositon(data,weight,i,movex,movey,drawim):
 				li.append([px,py,newpx,newpy])
 
-if len(li) == 3:
-	pass
-else:
-	li.pop(-1)
+print(li,'li')
+group = []
+t = False
+for i in range(len(li)):
+	for i1 in range(i+1,len(li)):
+		if abs(li[i][0]-li[i1][0]) < 5 and abs(li[i][2]-li[i1][2]) < 5:
+			group.append(li[i][:])
+			group.append(li[i1][:])
+			li.pop(i1)
+			li.pop(i)
+			t = True
+			break
+	if t:
+		break
+for i in li:
+	if i[1] == group[0][1] or i[1] == group[1][1]:
+		group.append(i[:])
+		break
+
+
 # print(li)
 
 disx = []
@@ -235,7 +252,7 @@ disy = []
 # 		group.append(li[i])
 # 	else:
 # 		k = 0
-group = li[:]
+# group = li[:]
 print(group)
 print(disx,disy)
 
@@ -281,9 +298,9 @@ l = len(data)
 while True:
 
 	# if (i%weight) > maxx:
-	if len(QRlist[-1]) >= 25:
+	if len(QRlist[-1]) >= aQRcode:
 		# if int(i/weight) >= maxy:
-		if len(QRlist) >= 25:
+		if len(QRlist) >= aQRcode:
 			# QRlist.pop(-1)
 			# QRlist.pop(-1)
 			break
@@ -320,7 +337,7 @@ while True:
 	else:
 		color = (100,100,255)
 
-	drawim.line([(px,py),(px+nowpx,py+nowpy)],color,3)
+	# drawim.line([(px,py),(px+nowpx,py+nowpy)],color,3)
 
 	# print(nowpx,nowpy,k)
 	for ix in range(nowpx):
