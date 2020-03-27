@@ -6,7 +6,7 @@ t0 = time.time()
 
 file = 'QRcode1.jpeg'
 
-im = Image.open(file)
+im = Image.open(file).rotate(180)
 li = []
 
 def change_to_bw(im):
@@ -105,9 +105,44 @@ def checkpositon(data,width,i,movex,movey,draw):
 
 	return k
 
+def decode(li):
+	def checkall(li,num,begin,end):
+		for i in range(begin,end+1):
+			if li[i] == num:
+				pass
+			else:
+				return False
+		return True
+	def fang(num,k):
+		r = 1
+		for i in range(k):
+			r *= num
+		return r
+
+	def get_yanma(y):
+		pass
 
 
-	
+	a = len(li)
+	data = []
+	for i in li:
+		data.append(i[:])
+	k = 0
+	if not checkall(data,1,0,7):
+		pass
+	elif not checkall(data,1,a-8,a-1):
+		pass
+	elif not checkall(data,1,a*(a-1),a*(a-1)+7):
+		pass
+	elif not checkall(data,1,a*a-8,a*a-1):
+		pass
+
+	lyanma = li[8][2:5]
+	yanma = 0
+	for i in range(3):
+		yanma += fang(2,2-i)*lyanma[i]
+
+
 
 change_to_bw(im)
 
@@ -222,9 +257,13 @@ miny = min(ally)
 maxy = max(ally)
 
 aQRcode = int((maxx-minx)*7/(group[0][2]-group[0][0]))
+#####correct a
+v = round((aQRcode-21)/4)
+aQRcode = v*4+21
+
 pperx = (maxx-minx)/aQRcode
 ppery = (maxy-miny)/aQRcode
-print(maxx-minx,maxy-miny,pperx,ppery)
+print(maxx-minx,maxy-miny,pperx,ppery,aQRcode)
 
 QRwidth = maxx-minx
 QRheight = maxy-miny
@@ -238,7 +277,7 @@ heightk = 0
 addyl = []
 
 
-
+l = len(data)
 while True:
 
 	# if (i%weight) > maxx:
@@ -281,15 +320,20 @@ while True:
 	else:
 		color = (100,100,255)
 
-	# drawim.line([(px,py),(px+nowpx,py+nowpy)],color,3)
+	drawim.line([(px,py),(px+nowpx,py+nowpy)],color,3)
 
 	# print(nowpx,nowpy,k)
 	for ix in range(nowpx):
 		for iy in range(nowpy):
-			if data[i+ix+iy*weight] == black:
-				b += 1
-			else:
+			index = i+ix+iy*weight
+			if index >= l:
 				w += 1
+				print(index,l)
+			else:	
+				if data[index] == black:
+					b += 1
+				else:
+					w += 1
 	if b >= w:
 		QRlist[-1].append(1)
 	else:
@@ -300,21 +344,21 @@ while True:
 	# break
 
 
-
-
-
+ans = decode(QRlist)
 
 
 for x in QRlist:
 	print(x)
 print(len(QRlist))
 print(len(QRlist[0]))
-print(addyl)
+print('has got list')
+# print(addyl)
 # print(QRlist)
 
 # im.show()
 im.save('caogao.png')
 
+# print(ans)
 
 t1 = time.time()
 print(t1-t0)
